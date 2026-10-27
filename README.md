@@ -44,33 +44,3 @@ We also learned to distinguish a coded interaction from a fully tested experienc
 | Selecting a local video | Our file input uses `accept="video/*"`. In its `change` handler, we inspect the selected file’s type, with an extension fallback when its type is empty, then use `URL.createObjectURL(file)` as the video source. We revoke the previous object URL when replacing a video, show the player, and attempt playback. Our controls remain available when automatic playback is blocked, and our video `error` handler displays a message if playback fails. |
 | Visible keyboard focus | We include `:focus-visible` outlines for buttons and the file input. Our video has native playback controls and `playsinline`. We still need broader keyboard and assistive-technology testing before making accessibility claims. |
 
-### Our earlier group review
-
-We report that we reviewed the photo-click interaction and video dialog in **Chrome and Safari**, and that they worked in our review. We did not have a suitable Mochi video, so this does **not** establish successful video playback. We have not recorded browser versions, devices, screen sizes, or detailed test steps.
-
-Our documented revisions were replacing the cartoon with a photo, changing “Intro” to “Introduction,” enlarging the five labels, changing the name font, adding the dialog and local video selector, and removing the placeholder sentence. We connect these revisions to clarity and our intended experience; we do not have before-and-after usability measurements.
-
-### Our checks during this README review
-
-We used AI-assisted checks during this documentation review, separately from our earlier group testing:
-
-- We compared our local `index.html` and `style.css` with the files on GitHub: both matched byte for byte. Our local photo matched the repository’s Git blob hash.
-- We requested our live website: it returned **HTTP 200**, and its HTML matched our local HTML.
-- We checked HTML element nesting, duplicate IDs, local asset paths, and ID references used by labels and ARIA attributes: these checks passed. Our CSS brace-balance check passed. These were structural checks, not full HTML/CSS validation or an accessibility audit.
-- We compiled our inline JavaScript with Node’s `vm.Script`: its syntax check passed. This check did not execute our event handlers.
-- We checked our published site in the Codex in-app browser: clicking our photo opened the dialog; our close button and Escape each dismissed it and returned focus to the photo button. Clicking “Meet Mochi” produced no visible change, consistent with our source code having no handler for it.
-
-We did not select a video or test playback, file replacement, invalid-file handling, playback-error messages, backdrop-click dismissal, mobile layouts, or screen readers during this review. We have not independently repeated our Chrome/Safari review. We changed documentation and added our existing sketch file; we did not change our application code during this review.
-
-## Our limitations and future interaction
-
-Our **“Meet Mochi” button does not currently open a form or navigate anywhere**. It is a `type="button"` with no JavaScript handler, and our prototype note explains that meeting requests are unavailable. Our prototype does not collect or save names, contact details, or meeting times. In a future version, we plan for the button to open a meeting request form asking for those details; validation, submission, and storage are not implemented.
-
-Our video dialog is implemented, but we have not supplied a Mochi video. Our current file selector makes a temporary local preview; it does not upload a video to a server or share it with other visitors, and we need to select a file again after refreshing. We also rely on a network connection for the Caveat font, with a cursive fallback.
-
-We identified two interface improvements to consider without changing the code in this review: we could make our photo hint explain that a local video must be selected, or supply a suitable video so the existing hint matches the experience. We could also make our meeting button’s unavailable state clearer until our form exists. These are suggested next steps, not completed fixes or observed playback bugs.
-
-## Our image credit and remaining evidence
-
-We found our Mochi photo through Google Images. Our supplied source link points to [Carolina Veterinary Specialists, “Best Breed of House Cat”](https://www.greensboro.carolinavet.com/site/greensboro-specialty-veterinary-blog/2023/03/15/how-to-choose-cat-breed), with [this image URL](https://d2zp5xs5cp8zlg.cloudfront.net/image-79322-800.jpg). We are identifying our source here; we have not established the original photographer or a reuse license from our project record.
-
