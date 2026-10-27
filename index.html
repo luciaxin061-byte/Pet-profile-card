@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Meet Mochi, a gentle and curious fictional cat looking for a loving home.">
+  <title>Meet Mochi | Pet Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <article class="pet-card" aria-labelledby="pet-name">
+      <header class="pet-header">
+        <p class="eyebrow">MEET YOUR NEW FRIEND</p>
+        <button class="pet-avatar" type="button" aria-label="Watch Mochi's video" aria-haspopup="dialog" aria-controls="mochi-video-dialog" aria-describedby="video-hint">
+          <img src="mochi.jpg" alt="Mochi, a fluffy brown tabby cat with golden eyes" width="800" height="800">
+        </button>
+        <p id="video-hint" class="video-hint">Click the photo to watch Mochi’s video and get to know her better!</p>
+        <p class="status"><span aria-hidden="true"></span> Ready for a home</p>
+      </header>
+
+      <div class="pet-information">
+        <div class="name-row"><span class="field-label">Name</span><h1 id="pet-name">Mochi</h1></div>
+        <dl class="pet-details">
+          <div><dt>Age</dt><dd>2 years</dd></div>
+          <div><dt>Gender</dt><dd>Female</dd></div>
+          <div><dt>Location</dt><dd>New York</dd></div>
+        </dl>
+        <section class="intro" aria-labelledby="about-heading">
+          <h2 id="about-heading">Introduction</h2>
+          <p>Mochi is a gentle, curious cat who loves sunny windows, soft blankets, and chasing feather toys. She enjoys quiet company and an afternoon nap.</p>
+        </section>
+        <section class="personality" aria-labelledby="personality-heading">
+          <h2 id="personality-heading">Personality</h2>
+          <ul class="traits"><li>Gentle</li><li>Curious</li><li>Playful</li></ul>
+        </section>
+      </div>
+
+      <footer>
+        <!-- Future JavaScript can open a meeting request form here. -->
+        <button type="button" aria-describedby="prototype-note">Meet Mochi <span aria-hidden="true">↗</span></button>
+        <p id="prototype-note" class="note">Class prototype with fictional details.<br>The meeting request feature is not available yet.</p>
+      </footer>
+    </article>
+  </main>
+  <dialog id="mochi-video-dialog" class="video-dialog" aria-labelledby="video-title">
+    <div class="video-dialog-header">
+      <h2 id="video-title">Get to know Mochi</h2>
+      <button class="video-close" type="button" aria-label="Close video" autofocus>×</button>
+    </div>
+    <video id="mochi-video" controls playsinline preload="metadata" aria-label="Mochi's video" hidden></video>
+    <p id="video-message" class="video-message" role="status" hidden></p>
+    <div class="video-upload">
+      <label for="mochi-video-upload">Choose Mochi’s video</label>
+      <input id="mochi-video-upload" type="file" accept="video/*" aria-describedby="upload-note">
+      <p id="upload-note">Your video stays on your device. Choose it again after refreshing the page.</p>
+    </div>
+  </dialog>
+  <script>
+    const photoButton = document.querySelector('.pet-avatar');
+    const videoDialog = document.querySelector('#mochi-video-dialog');
+    const video = document.querySelector('#mochi-video');
+    const videoMessage = document.querySelector('#video-message');
+    const videoUpload = document.querySelector('#mochi-video-upload');
+    let videoUrl = '';
+
+    photoButton.addEventListener('click', () => {
+      videoDialog.showModal();
+      if (videoUrl) {
+        video.play().catch(() => {
+          // Browser playback restrictions can be handled with the player controls.
+        });
+      }
+    });
+
+    videoUpload.addEventListener('change', () => {
+      const file = videoUpload.files[0];
+      if (!file) return;
+      if (!(file.type.startsWith('video/') ||
+          (!file.type && /\.(mp4|webm|mov|m4v|ogv|ogg)$/i.test(file.name)))) {
+        videoMessage.textContent = 'Please choose a video file.';
+        videoMessage.hidden = false;
+        videoUpload.value = '';
+        return;
+      }
+      video.pause();
+      if (videoUrl) URL.revokeObjectURL(videoUrl);
+      videoUrl = URL.createObjectURL(file);
+      video.src = videoUrl;
+      video.hidden = false;
+      videoMessage.hidden = true;
+      video.load();
+      video.play().catch(() => {
+        // The player controls remain available if automatic playback is blocked.
+      });
+    });
+
+    document.querySelector('.video-close').addEventListener('click', () => videoDialog.close());
+    videoDialog.addEventListener('click', (event) => {
+      const bounds = videoDialog.getBoundingClientRect();
+      if (event.target === videoDialog &&
+          (event.clientX < bounds.left || event.clientX > bounds.right ||
+           event.clientY < bounds.top || event.clientY > bounds.bottom)) {
+        videoDialog.close();
+      }
+    });
+    videoDialog.addEventListener('close', () => {
+      video.pause();
+      if (video.readyState > 0) video.currentTime = 0;
+      photoButton.focus();
+    });
+    video.addEventListener('error', () => {
+      videoMessage.textContent = 'This video could not be played. Please try another file, such as an MP4 or WebM video.';
+      videoMessage.hidden = false;
+    });
+    window.addEventListener('pagehide', () => {
+      video.pause();
+    });
+  </script>
+</body>
+</html>
