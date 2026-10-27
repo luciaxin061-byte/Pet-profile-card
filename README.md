@@ -23,7 +23,7 @@ We chose a real cat photo instead of the AI-provided cartoon illustration becaus
 
 ### Our original sketch
 
-![Our original sketch showing a centered pet picture, labeled profile information, an introduction, and a large oval Meet button.](sketch.jpg)
+[Our original sketch showing a centered pet picture, labeled profile information, an introduction, and a large oval Meet button.](sketch.jpg)
 
 We included the sketch already supplied during our project, rather than creating a new image as evidence. Our finished card keeps its main order and adds a status line, location, personality tags, and a video dialog.
 
