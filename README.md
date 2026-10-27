@@ -35,8 +35,6 @@ Our iterations helped us connect design decisions with code. Replacing the illus
 
 We also learned to distinguish a coded interaction from a fully tested experience. We reviewed the dialog, but we did not have a suitable Mochi video to test the intended viewing experience completely. We cannot claim that video playback succeeded just because the event handlers exist. Our recorded history supports these specific revisions; we have not documented additional experiments, failed prompts, or measured usability results.
 
-## Our code implementation
-
 | Our choice | How our actual code expresses it |
 | --- | --- |
 | A clearly organized pet profile | We use `<main>` and `<article class="pet-card" aria-labelledby="pet-name">` for the card, an `<h1>` for Mochi’s name, a `<dl>` with `<dt>`/`<dd>` pairs for age, gender, and location, and labeled sections for the introduction and personality. |
@@ -47,8 +45,6 @@ We also learned to distinguish a coded interaction from a fully tested experienc
 | Opening and closing our video dialog | Our photo button’s `click` handler calls `videoDialog.showModal()`. Our close-button handler calls `.close()`, and our dialog click handler closes it when a click is outside its bounds. Our native `<dialog>` also supports Escape. In our `close` handler, we pause the video, reset its time when media is ready, and return focus to the photo button. |
 | Selecting a local video | Our file input uses `accept="video/*"`. In its `change` handler, we inspect the selected file’s type, with an extension fallback when its type is empty, then use `URL.createObjectURL(file)` as the video source. We revoke the previous object URL when replacing a video, show the player, and attempt playback. Our controls remain available when automatic playback is blocked, and our video `error` handler displays a message if playback fails. |
 | Visible keyboard focus | We include `:focus-visible` outlines for buttons and the file input. Our video has native playback controls and `playsinline`. We still need broader keyboard and assistive-technology testing before making accessibility claims. |
-
-## Our testing and revisions
 
 ### Our earlier group review
 
@@ -79,6 +75,4 @@ We identified two interface improvements to consider without changing the code i
 ## Our image credit and remaining evidence
 
 We found our Mochi photo through Google Images. Our supplied source link points to [Carolina Veterinary Specialists, “Best Breed of House Cat”](https://www.greensboro.carolinavet.com/site/greensboro-specialty-veterinary-blog/2023/03/15/how-to-choose-cat-breed), with [this image URL](https://d2zp5xs5cp8zlg.cloudfront.net/image-79322-800.jpg). We are identifying our source here; we have not established the original photographer or a reuse license from our project record.
-
-Before our final submission, we still need to answer: **Which devices, browser versions, and screen sizes did we use for our Chrome and Safari review, and which actions did we check? What photographer credit and reuse terms accompany our photo source?** We also need a suitable Mochi video before we can complete and document playback testing. We have included our existing sketch, so we do not currently need to supply a screenshot as a substitute.
 
