@@ -1,6 +1,4 @@
-# Pet-profile-card
-
-# Pet Profile Card — Meet Mochi 🐱
+# Pet profile card - Meet Mochi 🐱
 
 ## Our project and group members
 
